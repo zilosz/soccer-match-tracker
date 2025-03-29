@@ -1,0 +1,10 @@
+{
+	"extends": ["../../tsconfig.json"],
+	"compilerOptions": {
+		"composite": true,
+		"lib": ["DOM", "DOM.Iterable", "ESNext"],
+		"jsx": "react-jsx",
+		"outDir": "./dist",
+		"rootDir": ".",
+	}
+}

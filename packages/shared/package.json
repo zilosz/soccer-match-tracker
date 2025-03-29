@@ -1,0 +1,21 @@
+{
+	"name": "@project/shared",
+	"version": "1.0.0",
+	"license": "ISC",
+	"main": "src/index.ts",
+	"type": "module",
+	"packageManager": "pnpm@10.7.0",
+	"exports": {
+		".": {
+			"default": "./dist/index.js"
+		}
+	},
+	"scripts": {
+		"build": "tsc -b",
+		"dev": "tsc -b -w"
+	},
+	"dependencies": {
+		"class-transformer": "^0.5.1",
+		"class-validator": "^0.14.1"
+	}
+}

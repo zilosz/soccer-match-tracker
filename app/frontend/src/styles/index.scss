@@ -1,0 +1,29 @@
+@use "@carbon/styles";
+
+.icon {
+  height: 25px;
+  width: 25px;
+  margin-right: 10px;
+}
+
+.date {
+  width: 180px;
+}
+
+.competition {
+  width: 275px;
+}
+
+.homeTeam,
+.awayTeam {
+  width: 225px;
+}
+
+.homeGoals,
+.awayGoals {
+  width: 190px;
+}
+
+.data-table-wrapper {
+  position: relative;
+}
