@@ -1,9 +1,10 @@
 import { Router } from "express";
+import type { Express } from "express";
 import { TeamController } from "../controllers/team.controller";
 import type { TeamService } from "../services/team.service";
 
-export const setupTeamRoutes = (teamService: TeamService): Router => {
-	const controller = new TeamController(teamService);
-
-	return Router().get("/", controller.getAll.bind(controller));
-};
+export function setupTeamRoutes(app: Express, service: TeamService) {
+	const controller = new TeamController(service);
+	const router = Router().get("/", controller.getAll.bind(controller));
+	app.use("/api/teams", router);
+}

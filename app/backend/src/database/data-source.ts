@@ -1,7 +1,7 @@
 import { DataSource } from "typeorm";
 
-export const initDataSource = async (): Promise<DataSource> => {
-	const dataSource = new DataSource({
+export async function initDataSource(): Promise<DataSource> {
+	return new DataSource({
 		type: "mysql",
 		username: process.env.DB_USER,
 		password: process.env.DB_PASSWORD,
@@ -10,7 +10,5 @@ export const initDataSource = async (): Promise<DataSource> => {
 		host: process.env.DB_HOST,
 		entities: ["src/entities/*.ts"],
 		synchronize: true,
-	});
-
-	return dataSource.initialize();
-};
+	}).initialize();
+}

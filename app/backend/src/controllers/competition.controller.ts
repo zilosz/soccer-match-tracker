@@ -8,11 +8,6 @@ export class CompetitionController {
 
 	async getAll(_: Request, res: Response): Promise<void> {
 		const comps = await this.service.getAll();
-
-		res.status(200).json(
-			comps.map((comp) => {
-				return plainToInstance(CompetitionDTO, comp);
-			}),
-		);
+		res.status(200).json(comps.map((c) => plainToInstance(CompetitionDTO, c)));
 	}
 }

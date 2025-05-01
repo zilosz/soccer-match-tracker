@@ -9,12 +9,7 @@ export class MatchController {
 
 	async getAll(_: Request, res: Response): Promise<void> {
 		const matches = await this.service.getAll();
-
-		res.status(200).json(
-			matches.map((match) => {
-				return plainToInstance(MatchDTO, match);
-			}),
-		);
+		res.status(200).json(matches.map((m) => plainToInstance(MatchDTO, m)));
 	}
 
 	async create(req: Request, res: Response): Promise<void> {
@@ -22,19 +17,15 @@ export class MatchController {
 		const validation = await validate(matchDTO);
 
 		if (validation.length > 0) {
-			console.log(validation);
+			console.error(validation);
 			res.status(400).send();
-		}
-
-		if (Object.prototype.hasOwnProperty.call(matchDTO, "id")) {
-			console.log("Found existing id in to-be-created match.");
+		} else if (Object.prototype.hasOwnProperty.call(matchDTO, "id")) {
+			console.error("To-be-created match already has an ID.");
 			res.status(400).send();
-
-			return;
+		} else {
+			const match = await this.service.create(matchDTO);
+			res.status(200).json(plainToInstance(MatchDTO, match));
 		}
-
-		const match = await this.service.create(matchDTO);
-		res.status(200).json(plainToInstance(MatchDTO, match));
 	}
 
 	async update(req: Request, res: Response): Promise<void> {
@@ -42,13 +33,12 @@ export class MatchController {
 		const validation = await validate(matchDTO);
 
 		if (validation.length > 0) {
+			console.error(validation);
 			res.status(400).send();
-
-			return;
+		} else {
+			const result = await this.service.update(matchDTO);
+			res.status(result.affected === 1 ? 204 : 400).send();
 		}
-
-		const result = await this.service.update(matchDTO);
-		res.status(result.affected === 1 ? 204 : 400).send();
 	}
 
 	async delete(req: Request, res: Response): Promise<void> {

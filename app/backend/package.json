@@ -8,7 +8,7 @@
 	"type": "module",
 	"scripts": {
 		"build": "tsc -b",
-		"dev": "tsx watch src/server.ts"
+		"dev": "tsx watch src/server.ts --clear-screen=false"
 	},
 	"dependencies": {
 		"class-transformer": "^0.5.1",

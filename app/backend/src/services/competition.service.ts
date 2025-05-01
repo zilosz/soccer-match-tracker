@@ -1,5 +1,5 @@
-import type { Repository } from "typeorm";
-import type { CompetitionEntity } from "../entities/Competition";
+import type { DataSource, Repository } from "typeorm";
+import { CompetitionEntity } from "../entities/Competition";
 
 export class CompetitionService {
 	constructor(private repo: Repository<CompetitionEntity>) {}
@@ -7,4 +7,10 @@ export class CompetitionService {
 	async getAll(): Promise<CompetitionEntity[]> {
 		return await this.repo.find();
 	}
+}
+
+export function createCompetitionService(
+	dataSource: DataSource,
+): CompetitionService {
+	return new CompetitionService(dataSource.getRepository(CompetitionEntity));
 }

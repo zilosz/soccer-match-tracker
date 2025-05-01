@@ -4,10 +4,10 @@
 	"license": "ISC",
 	"packageManager": "pnpm@10.7.0",
 	"scripts": {
-		"frontend": "pnpm --filter @project/frontend",
 		"backend": "pnpm --filter @project/backend",
 		"shared": "pnpm --filter @project/shared",
-		"dev": "pnpm --recursive --parallel --stream run dev"
+    "frontend": "pnpm --filter @project/frontend",
+		"dev": "pnpm --recursive --stream --parallel run dev"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",

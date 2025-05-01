@@ -1,6 +1,11 @@
 import type { MatchDTO, MatchDTONoId } from "@project/shared";
-import type { DeleteResult, Repository, UpdateResult } from "typeorm";
-import type { MatchEntity } from "../entities/Match";
+import type {
+	DataSource,
+	DeleteResult,
+	Repository,
+	UpdateResult,
+} from "typeorm";
+import { MatchEntity } from "../entities/Match";
 
 export class MatchService {
 	constructor(private repo: Repository<MatchEntity>) {}
@@ -23,4 +28,8 @@ export class MatchService {
 	async delete(id: number): Promise<DeleteResult> {
 		return await this.repo.delete(id);
 	}
+}
+
+export function createMatchService(dataSource: DataSource): MatchService {
+	return new MatchService(dataSource.getRepository(MatchEntity));
 }

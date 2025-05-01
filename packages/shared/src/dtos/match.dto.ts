@@ -36,6 +36,7 @@ export class MatchDTONoId {
 }
 
 export class MatchDTO extends MatchDTONoId {
+	@IsInt()
 	@IsPositive()
 	id!: number;
 }
