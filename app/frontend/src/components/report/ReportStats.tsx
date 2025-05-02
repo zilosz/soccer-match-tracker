@@ -7,7 +7,7 @@ type ReportStatsProps = {
 
 export default function ReportStats({ stats }: ReportStatsProps) {
   return (
-    <>
+    <div className="report-section report-stats">
       <h2>Statistics</h2>
       {stats && stats.matches.length > 0 ? (
         <>
@@ -51,6 +51,6 @@ export default function ReportStats({ stats }: ReportStatsProps) {
           hideCloseButton
         />
       )}
-    </>
+    </div>
   );
 }

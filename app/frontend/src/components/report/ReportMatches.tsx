@@ -68,7 +68,7 @@ export default function ReportMatches({ stats }: ReportMatchesProps) {
     : [];
 
   return (
-    <>
+    <div className="report-section report-matches">
       <h2>Matches</h2>
       <DataTable headers={headers} rows={rows.slice((page - 1) * pageSize, page * pageSize)}>
         {({ rows, headers, getTableProps, getHeaderProps, getRowProps }) => (
@@ -118,6 +118,6 @@ export default function ReportMatches({ stats }: ReportMatchesProps) {
           </TableContainer>
         )}
       </DataTable>
-    </>
+    </div>
   );
 }

@@ -70,10 +70,10 @@ export default function Report() {
 
       const data = await res.json();
       const stats = plainToInstance(ReportStatsDTO, data);
-      const statsValidation = await validate(stats);
+      const validation = await validate(stats);
 
-      if (statsValidation.length > 0) {
-        throw new Error(statsValidation.toString());
+      if (validation.length > 0) {
+        throw new Error(validation.toString());
       }
 
       setReportStats(stats);
@@ -122,12 +122,8 @@ export default function Report() {
           </Button>
         </Stack>
       </div>
-      <div className="report-section report-matches">
-        <ReportMatches stats={reportStats} />
-      </div>
-      <div className="report-section report-stats">
-        <ReportStats stats={reportStats} />
-      </div>
+      <ReportMatches stats={reportStats} />
+      <ReportStats stats={reportStats} />
     </div>
   );
 }

@@ -27,8 +27,6 @@ import useTeams from "../../hooks/useTeams";
 import { showNotification } from "../utils";
 import MatchDeleteButton from "./MatchDeleteButton";
 
-const BASE_URL = "http://localhost:8080";
-
 const headers = [
   {
     key: "date",
@@ -106,7 +104,7 @@ export default function Matches() {
     }
 
     try {
-      const res = await fetch("http://localhost:8080/api/matches/${id}", {
+      const res = await fetch(`http://localhost:8080/api/matches/${id}`, {
         method: "DELETE",
       });
 
