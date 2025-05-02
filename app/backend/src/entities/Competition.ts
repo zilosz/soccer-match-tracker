@@ -2,9 +2,9 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("competitions")
 export class CompetitionEntity {
-	@PrimaryGeneratedColumn()
-	id!: number;
+  @PrimaryGeneratedColumn()
+  id!: number;
 
-	@Column("varchar")
-	name!: string;
+  @Column("varchar")
+  name!: string;
 }

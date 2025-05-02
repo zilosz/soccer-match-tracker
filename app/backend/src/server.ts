@@ -22,17 +22,17 @@ app.use(express.urlencoded({ extended: true }));
 const PORT = Number(process.env.PORT) || 8080;
 
 try {
-	const dataSource = await initDataSource();
-	console.log("Data Source has been initialized!");
+  const dataSource = await initDataSource();
+  console.log("Data Source has been initialized!");
 
-	setupMatchRoutes(app, createMatchService(dataSource));
-	setupTeamRoutes(app, createTeamService(dataSource));
-	setupCompetitionRoutes(app, createCompetitionService(dataSource));
-	setupReportRoutes(app, createReportService(dataSource));
+  setupMatchRoutes(app, createMatchService(dataSource));
+  setupTeamRoutes(app, createTeamService(dataSource));
+  setupCompetitionRoutes(app, createCompetitionService(dataSource));
+  setupReportRoutes(app, createReportService(dataSource));
 } catch (err) {
-	console.error("Failed to initialize Data Source", err);
+  console.error("Failed to initialize Data Source", err);
 }
 
 app.listen(PORT, () => {
-	console.log(`Server running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });

@@ -1,29 +1,29 @@
 {
-	"compilerOptions": {
-		"target": "ES2022",
-		"useDefineForClassFields": true,
-		"module": "ES2022",
-		"moduleResolution": "Node",
-		"strict": true,
-		"resolveJsonModule": true,
-		"isolatedModules": true,
-		"esModuleInterop": true,
-		"lib": ["ES2022"],
-		"skipLibCheck": true,
-		"allowJs": false,
-		"noFallthroughCasesInSwitch": true,
-		"strictNullChecks": true, 
-        "baseUrl": "."
-	},
-	"references": [
-		{
-			"path": "app/frontend"
-		},
-		{
-			"path": "app/backend"
-		},
-		{
-			"path": "packages/shared"
-		}
-	]
+  "compilerOptions": {
+    "target": "ES2022",
+    "useDefineForClassFields": true,
+    "module": "ES2022",
+    "moduleResolution": "Node",
+    "strict": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "lib": ["ES2022"],
+    "skipLibCheck": true,
+    "allowJs": false,
+    "noFallthroughCasesInSwitch": true,
+    "strictNullChecks": true,
+    "baseUrl": "."
+  },
+  "references": [
+    {
+      "path": "app/frontend"
+    },
+    {
+      "path": "app/backend"
+    },
+    {
+      "path": "packages/shared"
+    }
+  ]
 }

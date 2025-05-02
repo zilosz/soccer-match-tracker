@@ -4,7 +4,7 @@ import { TeamController } from "../controllers/team.controller";
 import type { TeamService } from "../services/team.service";
 
 export function setupTeamRoutes(app: Express, service: TeamService) {
-	const controller = new TeamController(service);
-	const router = Router().get("/", controller.getAll.bind(controller));
-	app.use("/api/teams", router);
+  const controller = new TeamController(service);
+  const router = Router().get("/", controller.getAll.bind(controller));
+  app.use("/api/teams", router);
 }

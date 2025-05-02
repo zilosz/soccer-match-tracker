@@ -4,10 +4,10 @@ import type { Request, Response } from "express";
 import type { CompetitionService } from "../services/competition.service";
 
 export class CompetitionController {
-	constructor(private service: CompetitionService) {}
+  constructor(private service: CompetitionService) {}
 
-	async getAll(_: Request, res: Response): Promise<void> {
-		const comps = await this.service.getAll();
-		res.status(200).json(comps.map((c) => plainToInstance(CompetitionDTO, c)));
-	}
+  async getAll(_: Request, res: Response): Promise<void> {
+    const comps = await this.service.getAll();
+    res.status(200).json(comps.map((c) => plainToInstance(CompetitionDTO, c)));
+  }
 }

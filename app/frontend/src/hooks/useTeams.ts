@@ -5,56 +5,56 @@ import { useEffect, useState } from "react";
 import { showNotification } from "../components/utils";
 
 export default function useTeams() {
-	const [teams, setTeams] = useState<TeamDTO[]>([]);
+  const [teams, setTeams] = useState<TeamDTO[]>([]);
 
-	useEffect(() => {
-		const fetchTeams = async () => {
-			try {
-				const res = await fetch("http://localhost:8080/api/teams");
+  useEffect(() => {
+    const fetchTeams = async () => {
+      try {
+        const res = await fetch("http://localhost:8080/api/teams");
 
-				if (!res.ok) {
-					showNotification({
-						title: `Error ${res.status}`,
-						caption: "Could not fetch teams.",
-						kind: "error",
-					});
+        if (!res.ok) {
+          showNotification({
+            title: `Error ${res.status}`,
+            caption: "Could not fetch teams.",
+            kind: "error",
+          });
 
-					return;
-				}
+          return;
+        }
 
-				const data = await res.json();
+        const data = await res.json();
 
-				if (!Array.isArray(data)) {
-					throw new Error("Team data is not an array.");
-				}
+        if (!Array.isArray(data)) {
+          throw new Error("Team data is not an array.");
+        }
 
-				const teams = plainToInstance(TeamDTO, data);
+        const teams = plainToInstance(TeamDTO, data);
 
-				for (const team of teams) {
-					const validation = await validate(team);
+        for (const team of teams) {
+          const validation = await validate(team);
 
-					if (validation.length > 0) {
-						throw new Error(validation[0].toString());
-					}
-				}
+          if (validation.length > 0) {
+            throw new Error(validation[0].toString());
+          }
+        }
 
-				teams.sort((a, b) => a.name.localeCompare(b.name));
-				setTeams(teams);
-			} catch (err) {
-				if (err instanceof Error) {
-					console.error(err.message);
-				}
+        teams.sort((a, b) => a.name.localeCompare(b.name));
+        setTeams(teams);
+      } catch (err) {
+        if (err instanceof Error) {
+          console.error(err.message);
+        }
 
-				showNotification({
-					title: "Unexpected Error",
-					caption: "Failed to fetch teams.",
-					kind: "error",
-				});
-			}
-		};
+        showNotification({
+          title: "Unexpected Error",
+          caption: "Failed to fetch teams.",
+          kind: "error",
+        });
+      }
+    };
 
-		fetchTeams();
-	}, []);
+    fetchTeams();
+  }, []);
 
-	return { teams, setTeams };
+  return { teams };
 }

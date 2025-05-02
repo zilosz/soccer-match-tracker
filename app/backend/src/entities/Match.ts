@@ -4,24 +4,24 @@ import { TeamEntity } from "./Team";
 
 @Entity("matches")
 export class MatchEntity {
-	@PrimaryGeneratedColumn()
-	id!: number;
+  @PrimaryGeneratedColumn()
+  id!: number;
 
-	@Column("date")
-	date!: Date;
+  @Column("date")
+  date!: Date;
 
-	@ManyToOne(() => CompetitionEntity)
-	competition!: CompetitionEntity;
+  @ManyToOne(() => CompetitionEntity)
+  competition!: CompetitionEntity;
 
-	@ManyToOne(() => TeamEntity)
-	homeTeam!: TeamEntity;
+  @ManyToOne(() => TeamEntity)
+  homeTeam!: TeamEntity;
 
-	@ManyToOne(() => TeamEntity)
-	awayTeam!: TeamEntity;
+  @ManyToOne(() => TeamEntity)
+  awayTeam!: TeamEntity;
 
-	@Column("int")
-	homeGoals!: number;
+  @Column("int")
+  homeGoals!: number;
 
-	@Column("int")
-	awayGoals!: number;
+  @Column("int")
+  awayGoals!: number;
 }

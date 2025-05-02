@@ -1,16 +1,16 @@
 {
-	"name": "soccer-match-tracker",
-	"version": "1.0.0",
-	"license": "ISC",
-	"packageManager": "pnpm@10.7.0",
-	"scripts": {
-		"backend": "pnpm --filter @project/backend",
-		"shared": "pnpm --filter @project/shared",
+  "name": "soccer-match-tracker",
+  "version": "1.0.0",
+  "license": "ISC",
+  "packageManager": "pnpm@10.7.0",
+  "scripts": {
+    "backend": "pnpm --filter @project/backend",
+    "shared": "pnpm --filter @project/shared",
     "frontend": "pnpm --filter @project/frontend",
-		"dev": "pnpm --recursive --stream --parallel run dev"
-	},
-	"devDependencies": {
-		"@biomejs/biome": "1.9.4",
-		"typescript": "^5.8.2"
-	}
+    "dev": "pnpm --recursive --stream --parallel run dev"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "typescript": "^5.8.2"
+  }
 }
