@@ -1,16 +1,10 @@
 import { Button, DatePicker, DatePickerInput, Dropdown, Stack } from "@carbon/react";
-import {
-  type CompetitionDTO,
-  type MatchFilterDTO,
-  ReportStatsDTO,
-  type TeamDTO,
-} from "@project/shared";
-import { instanceToPlain, plainToInstance } from "class-transformer";
-import { validate } from "class-validator";
+import type { CompetitionDTO, MatchFilterDTO, ReportStatsDTO, TeamDTO } from "@project/shared";
 import { useState } from "react";
+import { generateReport } from "../../api/report";
 import useCompetitions from "../../hooks/useCompetitions";
 import useTeams from "../../hooks/useTeams";
-import { showNotification } from "../utils";
+import { notifyAPIError } from "../../utils/notification";
 import ReportMatches from "./ReportMatches";
 import ReportStats from "./ReportStats";
 
@@ -30,64 +24,17 @@ export default function Report() {
     setSelectedEndDate(dates[1]);
   };
 
-  const handleButtonClick = async () => {
-    const matchFilter: MatchFilterDTO = {};
+  const handleGenerateReport = () => {
+    const matchFilter: MatchFilterDTO = {
+      teamId: selectedTeam?.id,
+      competitionId: selectedComp?.id,
+      startDate: selectedStartDate ?? undefined,
+      endDate: selectedEndDate ?? undefined,
+    };
 
-    if (selectedTeam) {
-      matchFilter.teamId = selectedTeam.id;
-    }
-
-    if (selectedComp) {
-      matchFilter.competitionId = selectedComp.id;
-    }
-
-    if (selectedStartDate) {
-      matchFilter.startDate = selectedStartDate;
-    }
-
-    if (selectedEndDate) {
-      matchFilter.endDate = selectedEndDate;
-    }
-
-    try {
-      const res = await fetch("http://localhost:8080/api/report", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(instanceToPlain(matchFilter)),
-      });
-
-      if (!res.ok) {
-        showNotification({
-          title: `Error ${res.status}`,
-          caption: "Could not fetch stats.",
-          kind: "error",
-        });
-
-        return;
-      }
-
-      const data = await res.json();
-      const stats = plainToInstance(ReportStatsDTO, data);
-      const validation = await validate(stats);
-
-      if (validation.length > 0) {
-        throw new Error(validation.toString());
-      }
-
-      setReportStats(stats);
-    } catch (err) {
-      if (err instanceof Error) {
-        console.error(err.message);
-      }
-
-      showNotification({
-        title: "Unexpected error",
-        caption: "Failed to acquire filtered matches.",
-        kind: "error",
-      });
-    }
+    generateReport(matchFilter)
+      .then(setReportStats)
+      .catch((err) => notifyAPIError(err, "Failed to generate report."));
   };
 
   return (
@@ -117,7 +64,7 @@ export default function Report() {
             <DatePickerInput id="start-date" labelText="Start date" placeholder="yyyy-mm-dd" />
             <DatePickerInput id="end-date" labelText="End date" placeholder="yyyy-mm-dd" />
           </DatePicker>
-          <Button className="submit-button" kind="primary" onClick={(_) => handleButtonClick()}>
+          <Button className="submit-button" kind="primary" onClick={(_) => handleGenerateReport()}>
             Generate Report
           </Button>
         </Stack>

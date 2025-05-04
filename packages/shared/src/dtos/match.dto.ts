@@ -6,8 +6,8 @@ import {
   Min,
   ValidateNested,
 } from "class-validator";
-import { CompetitionDTO } from "./competition.dto";
-import { TeamDTO } from "./team.dto";
+import { CompetitionDTO } from "./competition.dto.js";
+import { TeamDTO } from "./team.dto.js";
 
 export class MatchDTONoId {
   @Transform(({ value }) => new Date(value))

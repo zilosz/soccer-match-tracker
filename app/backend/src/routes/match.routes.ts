@@ -1,7 +1,7 @@
 import { Router } from "express";
 import type { Express } from "express";
-import { MatchController } from "../controllers/match.controller";
-import type { MatchService } from "../services/match.service";
+import { MatchController } from "../controllers/match.controller.js";
+import type { MatchService } from "../services/match.service.js";
 
 export function setupMatchRoutes(app: Express, service: MatchService) {
   const controller = new MatchController(service);

@@ -17,14 +17,13 @@ import {
   TableToolbar,
   TableToolbarContent,
 } from "@carbon/react";
-import { MatchDTO, MatchDTONoId } from "@project/shared";
-import { instanceToPlain, plainToInstance } from "class-transformer";
-import { validate } from "class-validator";
+import type { MatchDTO } from "@project/shared";
 import { type ReactNode, useState } from "react";
+import { createMatch, deleteMatch, updateMatch } from "../../api/matches";
 import useCompetitions from "../../hooks/useCompetitions";
 import useMatches from "../../hooks/useMatches";
 import useTeams from "../../hooks/useTeams";
-import { showNotification } from "../utils";
+import { notifyAPIError, notifyError, notifySuccess } from "../../utils/notification";
 import MatchDeleteButton from "./MatchDeleteButton";
 
 const headers = [
@@ -96,51 +95,27 @@ export default function Matches() {
     setPageSize(pageSize);
   };
 
-  const handleMatchDelete = async (id: number) => {
+  const handleMatchDelete = (id: number) => {
     if (isAdding && id === editedMatch?.id) {
       stopMatchEditing();
 
       return;
     }
 
-    try {
-      const res = await fetch(`http://localhost:8080/api/matches/${id}`, {
-        method: "DELETE",
-      });
+    deleteMatch(id)
+      .then(() => {
+        notifySuccess("Deleted match.");
 
-      if (!res.ok) {
-        showNotification({
-          title: `Error ${res.status}`,
-          caption: "Failed to delete match.",
-          kind: "error",
-        });
+        const newMatches = matches.filter((match) => match.id !== id);
+        setMatches(newMatches);
 
-        return;
-      }
-    } catch (err) {
-      showNotification({
-        title: "Unexpected Error",
-        caption: "Failed to delete match.",
-        kind: "error",
-      });
+        const lastPage = Math.ceil(matches.length / pageSize);
 
-      return;
-    }
-
-    showNotification({
-      title: "Success",
-      caption: "Deleted match.",
-      kind: "success",
-    });
-
-    const newMatches = matches.filter((match) => match.id !== id);
-    setMatches(newMatches);
-
-    const lastPage = Math.ceil(matches.length / pageSize);
-
-    if (page === lastPage && page > 0 && newMatches.length % pageSize === 0) {
-      setPage(page - 1);
-    }
+        if (page === lastPage && page > 0 && newMatches.length % pageSize === 0) {
+          setPage(page - 1);
+        }
+      })
+      .catch((err) => notifyAPIError(err, "Failed to delete match."));
   };
 
   const handleMatchEdit = (match: MatchDTO) => {
@@ -157,119 +132,44 @@ export default function Matches() {
     }
   };
 
-  const handleMatchCreate = async () => {
+  const handleMatchCreate = () => {
     if (!editedMatch) return;
 
     const { id, ...editedMatchNoId } = editedMatch;
-    const matchNoId = plainToInstance(MatchDTONoId, editedMatchNoId);
 
-    try {
-      const res = await fetch("http://localhost:8080/api/matches", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(instanceToPlain(matchNoId)),
-      });
+    createMatch(editedMatchNoId)
+      .then((createdMatch) => {
+        notifySuccess("Created match.");
 
-      if (!res.ok) {
-        showNotification({
-          title: `Error ${res.status}`,
-          caption: "Failed to create match.",
-          kind: "error",
-        });
-
-        return;
-      }
-
-      const data = await res.json();
-      const newMatch = plainToInstance(MatchDTO, data);
-      const validation = await validate(newMatch);
-
-      if (validation.length > 0) {
-        throw new Error(validation[0].toString());
-      }
-
-      setMatches(matches.map((match) => (match.id === -1 ? newMatch : match)));
-      setIsAdding(false);
-      setEditedMatch(null);
-
-      showNotification({
-        title: "Success",
-        caption: "Created match.",
-        kind: "success",
-      });
-    } catch (err) {
-      if (err instanceof Error) {
-        console.error(err.message);
-      }
-
-      showNotification({
-        title: "Unexpected Error",
-        caption: "Failed to create match.",
-        kind: "error",
-      });
-    }
+        setMatches(matches.map((match) => (match.id === -1 ? createdMatch : match)));
+        setIsAdding(false);
+        setEditedMatch(null);
+      })
+      .catch((err) => notifyAPIError(err, "Failed to create match."));
   };
 
-  const handleMatchUpdate = async () => {
+  const handleMatchUpdate = () => {
     if (!editedMatch) return;
 
-    try {
-      const res = await fetch(`http://localhost:8080/api/matches/${editedMatch.id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(instanceToPlain(editedMatch)),
-      });
+    updateMatch(editedMatch)
+      .then(() => {
+        notifySuccess("Edited match.");
 
-      if (!res.ok) {
-        showNotification({
-          title: `Error ${res.status}`,
-          caption: "Failed to update match.",
-          kind: "error",
-        });
-
-        return;
-      }
-    } catch (err) {
-      showNotification({
-        title: "Unexpected Error",
-        caption: "Failed to update match.",
-        kind: "error",
-      });
-
-      return;
-    }
-
-    showNotification({
-      title: "Success",
-      caption: "Edited match.",
-      kind: "success",
-    });
-
-    setMatches(matches.map((match) => (match.id === editedMatch.id ? editedMatch : match)));
-    setEditedMatch(null);
+        setMatches(matches.map((match) => (match.id === editedMatch.id ? editedMatch : match)));
+        setEditedMatch(null);
+      })
+      .catch((err) => notifyAPIError(err, "Failed to edit match."));
   };
 
-  const handleMatchSave = async () => {
+  const handleMatchSave = () => {
     if (!editedMatch) return;
 
     if (editedMatch.homeGoals < 0 || editedMatch.awayGoals < 0) {
-      showNotification({
-        title: "Match Error",
-        caption: "Goals cannot be negative.",
-        kind: "error",
-      });
-
-      return;
-    }
-
-    if (isAdding) {
-      await handleMatchCreate();
+      notifyError("Match Error", "Goals cannot be negative.");
+    } else if (isAdding) {
+      handleMatchCreate();
     } else {
-      await handleMatchUpdate();
+      handleMatchUpdate();
     }
   };
 

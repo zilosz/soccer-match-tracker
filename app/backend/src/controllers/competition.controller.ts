@@ -1,7 +1,7 @@
 import { CompetitionDTO } from "@project/shared";
 import { plainToInstance } from "class-transformer";
 import type { Request, Response } from "express";
-import type { CompetitionService } from "../services/competition.service";
+import type { CompetitionService } from "../services/competition.service.js";
 
 export class CompetitionController {
   constructor(private service: CompetitionService) {}

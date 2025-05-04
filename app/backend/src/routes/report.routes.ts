@@ -1,6 +1,6 @@
 import { type Express, Router } from "express";
-import { ReportController } from "../controllers/report.controller";
-import type { ReportService } from "../services/report.service";
+import { ReportController } from "../controllers/report.controller.js";
+import type { ReportService } from "../services/report.service.js";
 
 export function setupReportRoutes(app: Express, service: ReportService) {
   const controller = new ReportController(service);

@@ -3,7 +3,7 @@ import { Button } from "@carbon/react";
 
 type MatchDeleteButtonProps = {
   matchId: number;
-  handleMatchDelete: (id: number) => Promise<void>;
+  handleMatchDelete: (id: number) => void;
 };
 
 export default function MatchDeleteButton({ matchId, handleMatchDelete }: MatchDeleteButtonProps) {

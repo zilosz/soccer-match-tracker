@@ -5,7 +5,7 @@ import type {
   Repository,
   UpdateResult,
 } from "typeorm";
-import { MatchEntity } from "../entities/Match";
+import { MatchEntity } from "../entities/Match.js";
 
 export class MatchService {
   constructor(private repo: Repository<MatchEntity>) {}
@@ -27,6 +27,11 @@ export class MatchService {
 
   async delete(id: number): Promise<DeleteResult> {
     return await this.repo.delete(id);
+  }
+
+  async isEmpty(): Promise<boolean> {
+    const count = await this.repo.count();
+    return count === 0;
   }
 }
 

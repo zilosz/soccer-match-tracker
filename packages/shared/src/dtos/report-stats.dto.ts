@@ -1,6 +1,6 @@
 import { Type } from "class-transformer";
 import { IsArray, IsInt, IsNumber, Min, ValidateNested } from "class-validator";
-import { MatchDTO } from "./match.dto";
+import { MatchDTO } from "./match.dto.js";
 
 export class ReportStatsDTO {
   @IsArray()

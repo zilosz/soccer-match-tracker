@@ -1,7 +1,7 @@
 import { Router } from "express";
 import type { Express } from "express";
-import { CompetitionController } from "../controllers/competition.controller";
-import type { CompetitionService } from "../services/competition.service";
+import { CompetitionController } from "../controllers/competition.controller.js";
+import type { CompetitionService } from "../services/competition.service.js";
 
 export function setupCompetitionRoutes(
   app: Express,

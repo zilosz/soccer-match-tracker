@@ -1,5 +1,5 @@
 import type { DataSource, Repository } from "typeorm";
-import { CompetitionEntity } from "../entities/Competition";
+import { CompetitionEntity } from "../entities/Competition.js";
 
 export class CompetitionService {
   constructor(private repo: Repository<CompetitionEntity>) {}

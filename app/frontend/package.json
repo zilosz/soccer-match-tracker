@@ -13,6 +13,8 @@
     "@carbon/icons-react": "^11.57.0",
     "@carbon/react": "^1.79.0",
     "@carbon/styles": "^1.78.0",
+    "@project/shared": "workspace:*",
+    "axios": "^1.9.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
     "react": "^19.0.0",
@@ -22,7 +24,6 @@
     "reflect-metadata": "^0.2.2"
   },
   "devDependencies": {
-    "@project/shared": "workspace:^",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "@vitejs/plugin-react": "^4.3.4",

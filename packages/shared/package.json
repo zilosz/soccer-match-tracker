@@ -2,14 +2,9 @@
   "name": "@project/shared",
   "version": "1.0.0",
   "license": "ISC",
-  "main": "src/index.ts",
   "type": "module",
+  "main": "dist/index.js",
   "packageManager": "pnpm@10.7.0",
-  "exports": {
-    ".": {
-      "default": "./dist/index.js"
-    }
-  },
   "scripts": {
     "build": "tsc -b",
     "dev": "tsc -b -w"

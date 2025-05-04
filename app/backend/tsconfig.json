@@ -4,8 +4,7 @@
     "composite": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "outDir": "./dist",
-    "rootDir": "./src"
-  },
-  "include": ["src/**/*.ts"]
+    "outDir": "dist",
+    "rootDir": "src"
+  }
 }

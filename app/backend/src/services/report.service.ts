@@ -1,7 +1,7 @@
 import { MatchDTO, type MatchFilterDTO, ReportStatsDTO } from "@project/shared";
 import { plainToInstance } from "class-transformer";
 import type { DataSource, Repository, SelectQueryBuilder } from "typeorm";
-import { MatchEntity } from "../entities/Match";
+import { MatchEntity } from "../entities/Match.js";
 
 export class ReportService {
   constructor(private matchRepo: Repository<MatchEntity>) {}
@@ -70,7 +70,7 @@ export class ReportService {
     const { uniqueComps } = await uniqueCompsQuery.getRawOne();
 
     return plainToInstance(ReportStatsDTO, {
-      matches: matches,
+      matches,
       avgGoalsPerMatch: Number(avgGoals),
       numUniqueTeams: Number(uniqueTeams),
       numUniqueCompetitions: Number(uniqueComps),

@@ -1,5 +1,5 @@
 import type { DataSource, Repository } from "typeorm";
-import { TeamEntity } from "../entities/Team";
+import { TeamEntity } from "../entities/Team.js";
 
 export class TeamService {
   constructor(private repo: Repository<TeamEntity>) {}

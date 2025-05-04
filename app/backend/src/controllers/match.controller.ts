@@ -2,7 +2,7 @@ import { MatchDTO, MatchDTONoId } from "@project/shared";
 import { plainToInstance } from "class-transformer";
 import { validate } from "class-validator";
 import type { Request, Response } from "express";
-import type { MatchService } from "../services/match.service";
+import type { MatchService } from "../services/match.service.js";
 
 export class MatchController {
   constructor(private service: MatchService) {}

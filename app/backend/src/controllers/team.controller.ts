@@ -1,7 +1,7 @@
 import { TeamDTO } from "@project/shared";
 import { plainToInstance } from "class-transformer";
 import type { Request, Response } from "express";
-import type { TeamService } from "../services/team.service";
+import type { TeamService } from "../services/team.service.js";
 
 export class TeamController {
   constructor(private service: TeamService) {}

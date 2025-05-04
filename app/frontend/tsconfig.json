@@ -2,9 +2,12 @@
   "extends": ["../../tsconfig.json"],
   "compilerOptions": {
     "composite": true,
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "lib": ["DOM", "DOM.Iterable", "ES2023"],
     "jsx": "react-jsx",
-    "outDir": "./dist",
-    "rootDir": "."
-  }
+    "outDir": "dist",
+    "target": "ES2023",
+    "module": "ESNext",
+    "moduleResolution": "node"
+  },
+  "include": ["src"]
 }

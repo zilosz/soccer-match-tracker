@@ -1,6 +1,6 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { CompetitionEntity } from "./Competition";
-import { TeamEntity } from "./Team";
+import { CompetitionEntity } from "./Competition.js";
+import { TeamEntity } from "./Team.js";
 
 @Entity("matches")
 export class MatchEntity {
